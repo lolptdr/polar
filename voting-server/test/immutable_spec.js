@@ -1,5 +1,5 @@
-import {expect} from 'chai';
 import {List} from 'immutable';
+import {expect} from 'chai';
 
 describe('immutability', () => {
 
@@ -20,10 +20,14 @@ describe('immutability', () => {
   });
 
   describe('a list', () => {
-    
+
     function addMovie(currentState, movie) {
       return currentState.push(movie);
     }
+
+    // function addMovie(currentState, movie) {
+    //   return currentState.update('movies', movies => movies.push(movie))
+    // }
 
     it('is immutable', () => {
       let state = List.of('Pulp Fiction', 'The Matrix');
