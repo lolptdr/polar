@@ -59,7 +59,7 @@ describe('application logic', () => {
 
       expect(nextState).to.equal(Map({
         vote: Map({
-          pair: List.of('Memento', '12 Monekys')
+          pair: List.of('Memento', '12 Monkeys')
         }),
         entries: List.of('Oldboy', 'The Green Mile')
       }));
@@ -83,6 +83,24 @@ describe('application logic', () => {
           pair: List.of('Moon', 'Solaris')
         }),
         entries: List.of('Slumdog Millionaire', 'Memento', 'Primer')
+      }));
+    });
+
+    it('marks winner when just one entry left', () => {
+      const state = Map({
+        vote: Map({
+          pair: List.of('2046', 'U-turn'),
+          tally: Map({
+            '2046': 4,
+            'U-turn': 2
+          })
+        }),
+        entries: List()
+      });
+      const nextState = next(state);
+
+      expect(nextState).to.equal(Map({
+        winner: '2046'
       }));
     });
 
