@@ -44,6 +44,48 @@ describe('application logic', () => {
       }));
     });
 
+    it('puts winner of current vote back to entries', () => {
+      const state = Map({
+        vote: Map({
+          pair: List.of('The Green Mile', 'Final Fantasy'),
+          tally: Map({
+            'The Green Mile': 4,
+            'Final Fantasy': 2
+          })
+        }),
+        entries: List.of('Memento', '12 Monkeys', 'Oldboy')
+      });
+      const nextState = next(state);
+
+      expect(nextState).to.equal(Map({
+        vote: Map({
+          pair: List.of('Memento', '12 Monekys')
+        }),
+        entries: List.of('Oldboy', 'The Green Mile')
+      }));
+    });
+
+    it('puts both from tied vote back to entries', () => {
+      const state = Map({
+        vote: Map({
+          pair: List.of('Memento', 'Primer'),
+          tally: Map({
+            'Memento': 3,
+            'Primer': 3
+          })
+        }),
+        entries: List.of('Moon', 'Solaris', 'Slumdog Millionaire')
+      });
+      const nextState = next(state);
+
+      expect(nextState).to.equal(Map({
+        vote: Map({
+          pair: List.of('Moon', 'Solaris')
+        }),
+        entries: List.of('Slumdog Millionaire', 'Memento', 'Primer')
+      }));
+    });
+
   });
 
   describe('vote', () => {
